@@ -1,5 +1,20 @@
 // TODO: Add getUsername function
 
+async function getUsername() {
+    // call the endpoint
+    const response = await fetch('/.auth/me');
+    // convert to JSON
+    const json = await response.json();
+    // ensure clientPrincipal and userDetails exist
+    if(json.clientPrincipal && json.clientPrincipal.userDetails) {
+        // return userDetails (the username)
+        return json.clientPrincipal.userDetails;
+    } else {
+        // return null if anonymous
+        return null;
+    }
+}
+
 async function displayMessage() {
     const messageElement = document.getElementById('message');
     const username = await getUsername();
